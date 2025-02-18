@@ -27,15 +27,28 @@ export const Media: CollectionConfig = {
     afterRead: [
       (doc) =>
       {
-        // Check if we have a URL and if it's a video file
-        if (doc.url && doc.mimeType && doc.mimeType.includes('video/')) {
-          const originalUrl = doc.url
-          const filename = originalUrl.split('/').pop()
+        // Properly type check if doc has a file field with URL
+        if (doc &&
+          typeof doc === 'object' &&
+          doc.filename &&
+          doc.mimeType &&
+          typeof doc.mimeType === 'string' &&
+          doc.mimeType.includes('video/')) {
 
-          // Transform the URL to use our custom API route
-          if (filename) {
-            // Use your domain for the API route
-            doc.url = `${process.env.NEXT_PUBLIC_SERVER_URL}/api/media/${filename}`
+          // For Vercel Blob Storage, we need to correctly construct the URL
+          // that Next.js expects for video files
+          if (doc.url) {
+            const filename = doc.filename
+
+            // Check if the URL needs transformation
+            // Only transform URLs that don't already use the API pattern
+            if (!doc.url.includes('/api/media/file/')) {
+              // Store the original URL (if needed for debugging)
+              doc.originalUrl = doc.url
+
+              // Transform to use the consistent API pattern
+              doc.url = `/api/media/file/${filename}`
+            }
           }
         }
         return doc
