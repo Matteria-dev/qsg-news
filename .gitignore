@@ -13,3 +13,5 @@ public/robots.txt
 public/sitemap*.xml
 /.vs/qsg-news/FileContentIndex
 /.gitignore
+/.vs/slnx.sqlite
+/.vs/slnx.sqlite-journal
