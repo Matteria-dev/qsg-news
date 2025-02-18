@@ -23,38 +23,6 @@ export const Media: CollectionConfig = {
     read: anyone,
     update: authenticated,
   },
-  hooks: {
-    afterRead: [
-      (doc) =>
-      {
-        // Properly type check if doc has a file field with URL
-        if (doc &&
-          typeof doc === 'object' &&
-          doc.filename &&
-          doc.mimeType &&
-          typeof doc.mimeType === 'string' &&
-          doc.mimeType.includes('video/')) {
-
-          // For Vercel Blob Storage, we need to correctly construct the URL
-          // that Next.js expects for video files
-          if (doc.url) {
-            const filename = doc.filename
-
-            // Check if the URL needs transformation
-            // Only transform URLs that don't already use the API pattern
-            if (!doc.url.includes('/api/media/file/')) {
-              // Store the original URL (if needed for debugging)
-              doc.originalUrl = doc.url
-
-              // Transform to use the consistent API pattern
-              doc.url = `/api/media/file/${filename}`
-            }
-          }
-        }
-        return doc
-      },
-    ],
-  },
   fields: [
     {
       name: 'alt',
