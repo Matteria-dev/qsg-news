@@ -41,7 +41,7 @@ export const Media: CollectionConfig = {
     },
   ],
   upload: {
-    MimeType: 'image/*,video/*',
+    mimeTypes:['image/*,video/*'],
     // Store media files in Payload's default location
     // Remove the staticDir to use Payload's internal storage
     adminThumbnail: 'thumbnail',
@@ -78,15 +78,6 @@ export const Media: CollectionConfig = {
         height: 630,
         crop: 'center',
       },
-    ],
-    // Add mimeTypes configuration for videos
-    mimeTypes: [
-      'image/jpeg',
-      'image/png',
-      'image/webp',
-      'image/gif',
-      'video/mp4',
-      'video/webm'
     ],
   },
 }
