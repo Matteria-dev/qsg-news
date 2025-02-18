@@ -2,7 +2,6 @@ import type { Block } from 'payload'
 
 import
   {
-    BlocksFeature,
     FixedToolbarFeature,
     HeadingFeature,
     HorizontalRuleFeature,
