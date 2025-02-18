@@ -1,10 +1,11 @@
 import type { CollectionConfig } from 'payload'
 
-import {
-  FixedToolbarFeature,
-  InlineToolbarFeature,
-  lexicalEditor,
-} from '@payloadcms/richtext-lexical'
+import
+  {
+    FixedToolbarFeature,
+    InlineToolbarFeature,
+    lexicalEditor,
+  } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
@@ -32,18 +33,16 @@ export const Media: CollectionConfig = {
       name: 'caption',
       type: 'richText',
       editor: lexicalEditor({
-        features: ({ rootFeatures }) => {
+        features: ({ rootFeatures }) =>
+        {
           return [...rootFeatures, FixedToolbarFeature(), InlineToolbarFeature()]
         },
       }),
     },
   ],
   upload: {
-    limits: {
-      fileSize: 30000000, // 30MB
-    },
-    // Upload to the public/media directory in Next.js making them publicly accessible even outside of Payload
-    staticDir: path.resolve(dirname, '../../public/media'),
+    // Store media files in Payload's default location
+    // Remove the staticDir to use Payload's internal storage
     adminThumbnail: 'thumbnail',
     focalPoint: true,
     imageSizes: [
@@ -78,6 +77,15 @@ export const Media: CollectionConfig = {
         height: 630,
         crop: 'center',
       },
+    ],
+    // Add mimeTypes configuration for videos
+    mimeTypes: [
+      'image/jpeg',
+      'image/png',
+      'image/webp',
+      'image/gif',
+      'video/mp4',
+      'video/webm'
     ],
   },
 }
