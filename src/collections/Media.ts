@@ -41,6 +41,7 @@ export const Media: CollectionConfig = {
     },
   ],
   upload: {
+    MimeType: 'image/*,video/*',
     // Store media files in Payload's default location
     // Remove the staticDir to use Payload's internal storage
     adminThumbnail: 'thumbnail',
