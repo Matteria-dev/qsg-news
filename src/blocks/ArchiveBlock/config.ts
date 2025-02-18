@@ -1,10 +1,21 @@
 import type { Block } from 'payload'
 
-import {
-  FixedToolbarFeature,
-  HeadingFeature,
-  InlineToolbarFeature,
-  lexicalEditor,
+import
+  {
+    BlocksFeature,
+    FixedToolbarFeature,
+    HeadingFeature,
+    HorizontalRuleFeature,
+    InlineToolbarFeature,
+    lexicalEditor,
+    SubscriptFeature,
+    SuperscriptFeature,
+    InlineCodeFeature,
+    AlignFeature,
+    IndentFeature,
+    UnorderedListFeature,
+    OrderedListFeature,
+    ChecklistFeature,
 } from '@payloadcms/richtext-lexical'
 
 export const Archive: Block = {
@@ -20,6 +31,15 @@ export const Archive: Block = {
             ...rootFeatures,
             HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
             FixedToolbarFeature(),
+            HorizontalRuleFeature(),
+            SubscriptFeature(),
+            SuperscriptFeature(),
+            InlineCodeFeature(),
+            AlignFeature(),
+            IndentFeature(),
+            UnorderedListFeature(),
+            OrderedListFeature(),
+            ChecklistFeature(),
             InlineToolbarFeature(),
           ]
         },
