@@ -1,26 +1,23 @@
 import type { CollectionConfig } from 'payload'
 
-import
-  {
-    BlocksFeature,
-    FixedToolbarFeature,
-    HeadingFeature,
-    HorizontalRuleFeature,
-    InlineToolbarFeature,
-    lexicalEditor,
-    InlineCodeFeature,
-    ParagraphFeature,
-    UnderlineFeature,
-    StrikethroughFeature,
-    SuperscriptFeature,
-    SubscriptFeature,
-    AlignFeature,
-    IndentFeature,
-    UnorderedListFeature,
-    LinkFeature,
-    OrderedListFeature,
-    ChecklistFeature,
-  } from '@payloadcms/richtext-lexical'
+import {
+  BlocksFeature,
+  FixedToolbarFeature,
+  HeadingFeature,
+  HorizontalRuleFeature,
+  InlineToolbarFeature,
+  lexicalEditor,
+  SubscriptFeature,
+  SuperscriptFeature,
+  InlineCodeFeature,
+  AlignFeature,
+  IndentFeature,
+  UnorderedListFeature,
+  OrderedListFeature,
+  ChecklistFeature,
+    
+
+} from '@payloadcms/richtext-lexical'
 
 import { authenticated } from '../../access/authenticated'
 import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
@@ -31,16 +28,14 @@ import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 import { populateAuthors } from './hooks/populateAuthors'
 import { revalidateDelete, revalidatePost } from './hooks/revalidatePost'
 
-import
-  {
-    MetaDescriptionField,
-    MetaImageField,
-    MetaTitleField,
-    OverviewField,
-    PreviewField,
-  } from '@payloadcms/plugin-seo/fields'
+import {
+  MetaDescriptionField,
+  MetaImageField,
+  MetaTitleField,
+  OverviewField,
+  PreviewField,
+} from '@payloadcms/plugin-seo/fields'
 import { slugField } from '@/fields/slug'
-import { Indent } from "lucide-react"
 
 export const Posts: CollectionConfig<'posts'> = {
   slug: 'posts',
@@ -65,8 +60,7 @@ export const Posts: CollectionConfig<'posts'> = {
   admin: {
     defaultColumns: ['title', 'slug', 'updatedAt'],
     livePreview: {
-      url: ({ data, req }) =>
-      {
+      url: ({ data, req }) => {
         const path = generatePreviewPath({
           slug: typeof data?.slug === 'string' ? data.slug : '',
           collection: 'posts',
@@ -104,28 +98,24 @@ export const Posts: CollectionConfig<'posts'> = {
               name: 'content',
               type: 'richText',
               editor: lexicalEditor({
-                features: ({ rootFeatures }) =>
-                {
+                features: ({ rootFeatures }) => {
                   return [
                     ...rootFeatures,
                     HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
                     BlocksFeature({ blocks: [Banner, Code, MediaBlock] }),
-                    UnderlineFeature(),
-                    StrikethroughFeature(),
-                    SuperscriptFeature(),
-                    SubscriptFeature(),
-                    IndentFeature(),
-                    LinkFeature(),
-                    HorizontalRuleFeature(),
                     FixedToolbarFeature(),
                     InlineToolbarFeature(),
+                    HorizontalRuleFeature(),
+                    SubscriptFeature(),
+                    SuperscriptFeature(),
                     InlineCodeFeature(),
-                    ParagraphFeature(),
                     AlignFeature(),
+                    IndentFeature(),
                     UnorderedListFeature(),
                     OrderedListFeature(),
                     ChecklistFeature(),
-                    ]
+
+                  ]
                 },
               }),
               label: false,
@@ -142,8 +132,7 @@ export const Posts: CollectionConfig<'posts'> = {
               admin: {
                 position: 'sidebar',
               },
-              filterOptions: ({ id }) =>
-              {
+              filterOptions: ({ id }) => {
                 return {
                   id: {
                     not_in: [id],
@@ -183,7 +172,10 @@ export const Posts: CollectionConfig<'posts'> = {
 
             MetaDescriptionField({}),
             PreviewField({
+              // if the `generateUrl` function is configured
               hasGenerateFn: true,
+
+              // field paths to match the target field for data
               titlePath: 'meta.title',
               descriptionPath: 'meta.description',
             }),
@@ -202,8 +194,7 @@ export const Posts: CollectionConfig<'posts'> = {
       },
       hooks: {
         beforeChange: [
-          ({ siblingData, value }) =>
-          {
+          ({ siblingData, value }) => {
             if (siblingData._status === 'published' && !value) {
               return new Date()
             }
@@ -221,6 +212,9 @@ export const Posts: CollectionConfig<'posts'> = {
       hasMany: true,
       relationTo: 'users',
     },
+    // This field is only used to populate the user data via the `populateAuthors` hook
+    // This is because the `user` collection has access control locked to protect user privacy
+    // GraphQL will also not return mutated user data that differs from the underlying schema
     {
       name: 'populatedAuthors',
       type: 'array',
@@ -252,7 +246,7 @@ export const Posts: CollectionConfig<'posts'> = {
   versions: {
     drafts: {
       autosave: {
-        interval: 100,
+        interval: 100, // We set this interval for optimal live preview
       },
       schedulePublish: true,
     },
