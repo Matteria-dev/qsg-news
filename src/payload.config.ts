@@ -70,7 +70,12 @@ export default buildConfig({
     ...plugins,
     vercelBlobStorage({
       collections: {
-        media: true,
+        media: {
+          generateFileURL: ({ filename, prefix }) =>
+          {
+            return `/api/media/file/${filename}`
+          },
+        },
       },
       token: process.env.BLOB_READ_WRITE_TOKEN || '',
     }),

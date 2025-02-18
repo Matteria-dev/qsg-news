@@ -23,6 +23,25 @@ export const Media: CollectionConfig = {
     read: anyone,
     update: authenticated,
   },
+  hooks: {
+    afterRead: [
+      (doc) =>
+      {
+        // Check if we have a URL and if it's a video file
+        if (doc.url && doc.mimeType && doc.mimeType.includes('video/')) {
+          const originalUrl = doc.url
+          const filename = originalUrl.split('/').pop()
+
+          // Transform the URL to use our custom API route
+          if (filename) {
+            // Use your domain for the API route
+            doc.url = `${process.env.NEXT_PUBLIC_SERVER_URL}/api/media/${filename}`
+          }
+        }
+        return doc
+      },
+    ],
+  },
   fields: [
     {
       name: 'alt',
