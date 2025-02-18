@@ -15,3 +15,5 @@ public/sitemap*.xml
 /.gitignore
 /.vs/slnx.sqlite
 /.vs/slnx.sqlite-journal
+/.vs/qsg-news/CopilotIndices/17.12.68.61481/CodeChunks.db-wal
+/.vs/qsg-news/CopilotIndices/17.12.68.61481/SemanticSymbols.db-wal
