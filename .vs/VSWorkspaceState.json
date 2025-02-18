@@ -1,6 +1,11 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\src",
+    "\\src\\blocks\\ArchiveBlock",
+    "\\src\\collections",
+    "\\src\\fields"
   ],
+  "SelectedNode": "\\src\\fields\\defaultLexical.ts",
   "PreviewInSolutionExplorer": false
 }
