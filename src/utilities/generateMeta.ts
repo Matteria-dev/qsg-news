@@ -7,24 +7,26 @@ const getMediaURL = (media?: Media | Config['db']['defaultIDType'] | null) =>
 {
   const serverUrl = getServerSideURL()
 
-  if (!media) return serverUrl + '/website-template-OG.webp' // Default image URL
+  if (!media) return serverUrl + '/website-template-OG.webp'
 
-  // Check if media is an object and has the mimeType property before accessing it
   if (typeof media === 'object' && media && 'mimeType' in media && media.mimeType) {
-    const { mimeType, url, sizes } = media
+    const { mimeType, sizes } = media // Use const for mimeType
+    let { url } = media
+
+    if (url && !url.includes('/api')) { // Check if url is not null/undefined
+      url = url.replace('/media', '/api/media')
+    }
 
     if (mimeType.startsWith('image/')) {
       const ogUrl = sizes?.og?.url
-      return ogUrl ? serverUrl + ogUrl : serverUrl + url
+      return ogUrl ? serverUrl + ogUrl : serverUrl + (url || '') // Handle url potentially being null
     } else if (mimeType.startsWith('video/')) {
-
-      return serverUrl + '/website-template-OG.webp' 
-
+      return serverUrl + '/website-template-OG.webp'
     }
   }
 
-  return serverUrl + '/website-template-OG.webp' 
-}
+  return serverUrl + '/website-template-OG.webp'
+};
 
 export const generateMeta = async (args: {
   doc: Partial<Page> | Partial<Post>
