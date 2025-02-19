@@ -1,4 +1,21 @@
 {
+  "version": 2,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/next"
+    } // Or your build command if different (e.g., @vercel/node)
+  ],
+  "routes": [
+    {
+      "src": "/api/media/(.*)",
+      "dest": "/api/media/$1"
+    }, // Handles /api/media requests
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    } // Catch-all route for everything else
+  ],
   "crons": [
     {
       "path": "/api/payload-jobs/run",

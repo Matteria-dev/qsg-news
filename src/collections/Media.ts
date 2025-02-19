@@ -1,11 +1,11 @@
 import type { CollectionConfig } from 'payload'
 
 import
-  {
-    FixedToolbarFeature,
-    InlineToolbarFeature,
-    lexicalEditor,
-  } from '@payloadcms/richtext-lexical'
+{
+  FixedToolbarFeature,
+  InlineToolbarFeature,
+  lexicalEditor,
+} from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
@@ -41,7 +41,6 @@ export const Media: CollectionConfig = {
     },
   ],
   upload: {
-    mimeTypes: ['image/*,video/mp4, video/webm'],
     // Store media files in Payload's default location
     // Remove the staticDir to use Payload's internal storage
     adminThumbnail: 'thumbnail',
@@ -78,6 +77,15 @@ export const Media: CollectionConfig = {
         height: 630,
         crop: 'center',
       },
+    ],
+    // Add mimeTypes configuration for videos
+    mimeTypes: [
+      'image/jpeg',
+      'image/png',
+      'image/webp',
+      'image/gif',
+      'video/mp4',
+      'video/webm'
     ],
   },
 }
