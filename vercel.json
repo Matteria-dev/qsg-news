@@ -4,5 +4,14 @@
       "path": "/api/payload-jobs/run",
       "schedule": "0 0 * * *"
     }
-  ]
+  ],
+  
+    "rewrites": [
+      {
+        "source": "/media/:path*",
+        "destination": "/api/media/:path*"
+      }
+    ]
+  
+
 }
