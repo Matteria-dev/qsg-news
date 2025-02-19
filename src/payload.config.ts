@@ -71,9 +71,10 @@ export default buildConfig({
     vercelBlobStorage({
       collections: {
         media: {
-          generateFileURL: ({ filename, prefix }) =>
+          generateFileURL: ({ filename }) =>
           {
-            return `/api/media/file/${filename}`
+            
+            return `https://<span class="math-inline">\{process\.env\.BLOB\_SPACE\_ID\}\.public\.blob\.vercel\-storage\.com/</span>{filename}`
           },
         },
       },
