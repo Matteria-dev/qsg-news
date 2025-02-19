@@ -1,45 +1,52 @@
 import type { Metadata } from 'next'
-
 import type { Media, Page, Post, Config } from '../payload-types'
-
 import { mergeOpenGraph } from './mergeOpenGraph'
 import { getServerSideURL } from './getURL'
 
-const getImageURL = (image?: Media | Config['db']['defaultIDType'] | null) => {
+const getMediaURL = (media?: Media | Config['db']['defaultIDType'] | null) =>
+{
   const serverUrl = getServerSideURL()
 
-  let url = serverUrl + '/website-template-OG.webp'
+  if (!media) return serverUrl + '/website-template-OG.webp' 
 
-  if (image && typeof image === 'object' && 'url' in image) {
-    const ogUrl = image.sizes?.og?.url
+  if (typeof media === 'object' && media && 'mimeType' in media) {
+    const { mimeType, url, sizes } = media
 
-    url = ogUrl ? serverUrl + ogUrl : serverUrl + image.url
+    if (mimeType.startsWith('image/')) { 
+      const ogUrl = sizes?.og?.url
+      return ogUrl ? serverUrl + ogUrl : serverUrl + url
+    } else if (mimeType.startsWith('video/')) { 
+
+      return serverUrl + '/website-template-OG.webp' 
+
+    }
   }
 
-  return url
+  return serverUrl + '/website-template-OG.webp' 
 }
 
 export const generateMeta = async (args: {
   doc: Partial<Page> | Partial<Post>
-}): Promise<Metadata> => {
+}): Promise<Metadata> =>
+{
   const { doc } = args || {}
 
-  const ogImage = getImageURL(doc?.meta?.image)
+  const ogMedia = getMediaURL(doc?.meta?.image) 
 
   const title = doc?.meta?.title
-    ? doc?.meta?.title + ' | Payload Website Template'
-    : 'Payload Website Template'
+    ? doc?.meta?.title + ' | Quicksilver Group News'
+    : 'Quicksilver Group News'
 
   return {
     description: doc?.meta?.description,
     openGraph: mergeOpenGraph({
       description: doc?.meta?.description || '',
-      images: ogImage
+      images: ogMedia 
         ? [
-            {
-              url: ogImage,
-            },
-          ]
+          {
+            url: ogMedia, 
+          },
+        ]
         : undefined,
       title,
       url: Array.isArray(doc?.slug) ? doc?.slug.join('/') : '/',
