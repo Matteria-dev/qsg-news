@@ -8,8 +8,8 @@
   
     "rewrites": [
       {
-        "source": "/media/:path*",
-        "destination": "/api/media/:path*"
+        "source": "/media/(.*)",
+        "destination": "/api/media/$1"
       }
     ]
   
